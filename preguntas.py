@@ -365,8 +365,6 @@ def pregunta_12():
 
             #lista2.append([fila[0], dato[4:]])
 
-
-
     return dict(sorted(dictionary.items()))
 
 
