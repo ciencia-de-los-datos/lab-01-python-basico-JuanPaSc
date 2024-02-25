@@ -11,7 +11,16 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
+# with open("data.csv", "r") as file:
+#     timesheet = file.readlines()
 
+# timesheet = [row.replace("\n", "") for row in timesheet]
+# timesheet = [row.split(",") for row in timesheet]
+# print(timesheet)
+
+data = open("data.csv", "r").readlines()
+data = [row.replace("\n","") for row in data]
+data = [row.replace("\t",";") for row in data]
 
 def pregunta_01():
     """
@@ -21,8 +30,7 @@ def pregunta_01():
     214
 
     """
-    return
-
+    return sum([int(cadena[2]) for cadena in data])
 
 def pregunta_02():
     """
@@ -39,7 +47,9 @@ def pregunta_02():
     ]
 
     """
-    return
+    letras = [palabra[0] for palabra in data]
+    letra = sorted(list(set(letras)))
+    return [(vocal,letras.count(vocal)) for vocal in letra]
 
 
 def pregunta_03():
@@ -57,8 +67,16 @@ def pregunta_03():
     ]
 
     """
-    return
+    dictionary = {}
+    tupla = [(cadena[0], int(cadena[2])) for cadena in data]
 
+    for clave, valor in tupla:
+        if clave not in dictionary.keys():
+            dictionary[clave] = valor
+        else:
+            dictionary[clave] += valor
+    
+    return sorted([(key,value) for key, value in dictionary.items()]) 
 
 def pregunta_04():
     """
@@ -82,8 +100,9 @@ def pregunta_04():
     ]
 
     """
-    return
-
+    meses = [palabra[9:11] for palabra in data]
+    mes = sorted(list(set(meses)))
+    return [(vocal,meses.count(vocal)) for vocal in mes]
 
 def pregunta_05():
     """
@@ -100,7 +119,16 @@ def pregunta_05():
     ]
 
     """
-    return
+    dictionary = {}
+    tupla = [(cadena[0], int(cadena[2])) for cadena in data]
+
+    for clave, valor in tupla:
+        if clave not in dictionary.keys():
+            dictionary[clave] = [valor]
+        else:
+            dictionary[clave] += [valor]
+    
+    return sorted([(key,max(value),min(value)) for key, value in dictionary.items()]) 
 
 
 def pregunta_06():
@@ -123,10 +151,18 @@ def pregunta_06():
         ("iii", 0, 9),
         ("jjj", 5, 17),
     ]
-
     """
-    return
-
+    lista = [cadena.split(";") for cadena in data]
+    lista = [cadena[4].split(",") for cadena in lista]
+    dictionary = {}
+    for l in lista:
+        for valores in l:
+            if valores[0:4] not in dictionary.keys():
+                dictionary[valores[0:4]] = [int(valores[4:])]
+            else:
+                dictionary[valores[0:4]] += [int(valores[4:])]
+    
+    return sorted([(key,min(value),max(value)) for key, value in dictionary.items()])
 
 def pregunta_07():
     """
@@ -149,8 +185,16 @@ def pregunta_07():
     ]
 
     """
-    return
+    dictionary = {}
+    tupla = [(int(cadena[2]), cadena[0]) for cadena in data]
 
+    for clave, valor in tupla:
+        if clave not in dictionary.keys():
+            dictionary[clave] = [valor]
+        else:
+            dictionary[clave] += [valor]
+    
+    return sorted([(key,value) for key, value in dictionary.items()]) 
 
 def pregunta_08():
     """
@@ -174,7 +218,16 @@ def pregunta_08():
     ]
 
     """
-    return
+    dictionary = {}
+    tupla = [(int(cadena[2]), cadena[0]) for cadena in data]
+
+    for clave, valor in tupla:
+        if clave not in dictionary.keys():
+            dictionary[clave] = [valor]
+        else:
+            dictionary[clave] += [valor]
+    
+    return sorted([(key,sorted(list(set(value)))) for key, value in dictionary.items()]) 
 
 
 def pregunta_09():
@@ -197,8 +250,17 @@ def pregunta_09():
     }
 
     """
-    return
-
+    lista = [cadena.split(";") for cadena in data]
+    lista = [cadena[4].split(",") for cadena in lista]
+    dictionary = {}
+    for l in lista:
+        for valores in l:
+            if valores[0:4] not in dictionary.keys():
+                dictionary[valores[0:4]] = 1
+            else:
+                dictionary[valores[0:4]] += 1
+    
+    return sorted([(key,value) for key, value in dictionary.items()])
 
 def pregunta_10():
     """
@@ -218,8 +280,13 @@ def pregunta_10():
 
 
     """
-    return
-
+    lista = [cadena.split(";") for cadena in data]
+    tupla = []
+    for sentence in lista:
+        sentence.remove(sentence[1]) 
+        sentence.remove(sentence[1])
+        tupla.append((sentence[0],len((sentence[1]).split(",")),len((sentence[2]).split(",")),))
+    return tupla
 
 def pregunta_11():
     """
@@ -236,11 +303,26 @@ def pregunta_11():
         "f": 134,
         "g": 35,
     }
-
-
     """
-    return
+    lista = [cadena.split(";") for cadena in data]
 
+    dictionary = {}
+    for sentence in lista:
+        sentence.remove(sentence[0]) 
+        sentence.remove(sentence[1])
+        sentence.remove(sentence[2])
+
+    for numero in lista:
+        numero[0] = int(numero[0])
+
+    for sentence in lista:
+        for letra in sentence[1].split(","):
+            if letra not in dictionary.keys():
+                dictionary[letra] = sentence[0]
+            else:
+                dictionary[letra] += sentence[0]
+
+    return dict(sorted(dictionary.items()))
 
 def pregunta_12():
     """
@@ -257,4 +339,29 @@ def pregunta_12():
     }
 
     """
-    return
+    lista = [cadena.split(";") for cadena in data]
+
+    dictionary = {}
+    for sentence in lista:
+        sentence.remove(sentence[1])
+        sentence.remove(sentence[1])  
+        sentence.remove(sentence[1])
+
+
+    lista = [[elemento[0],elemento[1].split(",")] for elemento in lista]
+    #lista = [[elemento[0]] + elemento[1] for elemento in lista]
+    
+    #lista_sin_tres_letras = [[fila[0], [dato[4:] for dato in fila[1]]] for fila in lista]
+    dictionary = {}
+    for fila in lista:
+        for dato in fila[1]:
+            if fila[0] in dictionary.keys():
+                dictionary[fila[0]] += int(dato[4:])
+            else:
+                dictionary[fila[0]] = int(dato[4:])
+
+            #lista2.append([fila[0], dato[4:]])
+
+
+    return dict(sorted(dictionary.items()))
+#print(pregunta_12())
