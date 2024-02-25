@@ -165,6 +165,7 @@ def pregunta_06():
     return sorted([(key,min(value),max(value)) for key, value in dictionary.items()])
 
 
+
 def pregunta_07():
     """
     Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla contiene un
@@ -262,6 +263,7 @@ def pregunta_09():
                 dictionary[valores[0:4]] += 1
 
     return dict(sorted([(key,value) for key, value in dictionary.items()]))
+
 
 def pregunta_10():
     """
