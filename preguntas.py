@@ -278,17 +278,35 @@ def pregunta_09():
     }
 
     """
-    lista = [cadena.split(";") for cadena in data]
-    lista = [cadena[4].split(",") for cadena in lista]
-    dictionary = {}
-    for l in lista:
-        for valores in l:
-            if valores[0:4] not in dictionary.keys():
-                dictionary[valores[0:4]] = 1
-            else:
-                dictionary[valores[0:4]] += 1
+    # lista = [cadena.split(";") for cadena in data]
+    # lista = [cadena[4].split(",") for cadena in lista]
+    # dictionary = {}
+    # for l in lista:
+    #     for valores in l:
+    #         if valores[0:4] not in dictionary.keys():
+    #             dictionary[valores[0:4]] = 1
+    #         else:
+    #             dictionary[valores[0:4]] += 1
 
-    return dict(sorted([(key,value) for key, value in dictionary.items()]))
+    # return dict(sorted([(key,value) for key, value in dictionary.items()]))
+    from operator import itemgetter
+    datos6=[z.replace("\t",";") for z in data]
+    datos6=[z.split(";") for z in datos6]
+    col6= [z[4] for z in datos6]
+    col6= [z.split(",") for z in col6]
+    diccionario={}
+    for elemento in col6:
+        for i in elemento:
+            if i[0:3] in diccionario:
+                diccionario[i[0:3]]+=1
+            else:
+                diccionario[i[0:3]]=1
+    f=itemgetter(0)
+    diccionario = sorted(diccionario.items(),key=f)
+    diccionario1 = {valor: numero for valor, numero in diccionario}
+
+    return diccionario1
+
 
 
 def pregunta_10():
