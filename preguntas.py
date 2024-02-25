@@ -152,44 +152,17 @@ def pregunta_06():
         ("jjj", 5, 17),
     ]
     """
-    # lista = [cadena.split(";") for cadena in data]
-    # lista = [cadena[4].split(",") for cadena in lista]
-    # dictionary = {}
-    # for l in lista:
-    #     for valores in l:
-    #         if valores[0:4] not in dictionary.keys():
-    #             dictionary[valores[0:4]] = [int(valores[4:])]
-    #         else:
-    #             dictionary[valores[0:4]] += [int(valores[4:])]
-    
-    # return sorted([(key,min(value),max(value)) for key, value in dictionary.items()])
-    from operator import itemgetter
-    datos6=[z.replace("\t",";") for z in data]
-    datos6=[z.split(";") for z in datos6]
-    col6= [z[4] for z in datos6]
-    col6= [z.split(",") for z in col6]
-    mayor={}
-    menor={}
-    for palabras in col6:
-        for i in palabras:
-            if i[0:3] in mayor:
-                if mayor[i[0:3]]<int(i[4:]):
-                    mayor[i[0:3]]=int(i[4:])
+    lista = [cadena.split(";") for cadena in data]
+    lista = [cadena[4].split(",") for cadena in lista]
+    dictionary = {}
+    for l in lista:
+        for valores in l:
+            if valores[0:3] not in dictionary.keys():
+                dictionary[valores[0:3]] = [int(valores[4:])]
             else:
-                mayor[i[0:3]]=int(i[4:])
-        for i in palabras:
-            if i[0:3] in menor:
-                if menor[i[0:3]]>int(i[4:]):
-                    menor[i[0:3]]=int(i[4:])
-            else:
-                menor[i[0:3]]=int(i[4:])     
+                dictionary[valores[0:3]] += [int(valores[4:])]
     
-    lista = [(i,menor[i],mayor[i]) for i in mayor]
-
-    f=itemgetter(0)
-    lista = sorted(lista,key=f)
-
-    return lista
+    return sorted([(key,min(value),max(value)) for key, value in dictionary.items()])
 
 
 def pregunta_07():
@@ -278,35 +251,17 @@ def pregunta_09():
     }
 
     """
-    # lista = [cadena.split(";") for cadena in data]
-    # lista = [cadena[4].split(",") for cadena in lista]
-    # dictionary = {}
-    # for l in lista:
-    #     for valores in l:
-    #         if valores[0:4] not in dictionary.keys():
-    #             dictionary[valores[0:4]] = 1
-    #         else:
-    #             dictionary[valores[0:4]] += 1
-
-    # return dict(sorted([(key,value) for key, value in dictionary.items()]))
-    from operator import itemgetter
-    datos6=[z.replace("\t",";") for z in data]
-    datos6=[z.split(";") for z in datos6]
-    col6= [z[4] for z in datos6]
-    col6= [z.split(",") for z in col6]
-    diccionario={}
-    for elemento in col6:
-        for i in elemento:
-            if i[0:3] in diccionario:
-                diccionario[i[0:3]]+=1
+    lista9 = [cadena.split(";") for cadena in data]
+    lista9 = [cadena[4].split(",") for cadena in lista9]
+    dictionary9 = {}
+    for l in lista9:
+        for valores in l:
+            if valores[0:3] not in dictionary9.keys():
+                dictionary9[valores[0:3]] = 1
             else:
-                diccionario[i[0:3]]=1
-    f=itemgetter(0)
-    diccionario = sorted(diccionario.items(),key=f)
-    diccionario1 = {valor: numero for valor, numero in diccionario}
+                dictionary9[valores[0:3]] += 1
 
-    return diccionario1
-
+    return dict(sorted([(key,value) for key, value in dictionary9.items()]))
 
 
 def pregunta_10():
